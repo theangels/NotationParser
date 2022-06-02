@@ -4,7 +4,7 @@ import re
 
 class NotationParser:
     def __init__(self):
-        self.setMajor('C')
+        self.setKeySignature('C')
 
         self.bpm = 120
         self.beatNumber = 4
