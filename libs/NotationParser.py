@@ -77,19 +77,20 @@ class NotationParser:
         extendNumber = monophonic.count('.')
         reduceNumber = monophonic.count('_')
         dottedNumber = monophonic.count('*')
-        upWaveNumber = monophonic.count('~')
+        # upWaveNumber = monophonic.count('~')
 
         realRate = self.scaleDict[scaleKey] * \
             math.pow(2, riseNumber) * (1 / math.pow(2, dropNumber))
 
         quarterNote = (60 / self.bpm) * self.beatNumber * (1.0 / 4)
 
-        timeValue = quarterNote * (1 / math.pow(2, reduceNumber))
+        if(extendNumber == 0):
+            timeValue = quarterNote * (1 / math.pow(2, reduceNumber))
 
-        for _ in range(dottedNumber):
-            timeValue *= 1.5
-
-        timeValue += quarterNote * extendNumber
+            for _ in range(dottedNumber):
+                timeValue *= 1.5
+        else:
+            timeValue = quarterNote * (extendNumber + 1)
 
         return {
             'rate': int(realRate),
