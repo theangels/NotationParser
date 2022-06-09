@@ -72,6 +72,7 @@ class NotationParser:
 
         digitals = re.search(r'\d+', monophonic)
         scaleKey += digitals.group(0)
+        
         riseNumber = monophonic.count('+')
         dropNumber = monophonic.count('-')
         extendNumber = monophonic.count('.')
