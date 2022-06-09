@@ -1,8 +1,8 @@
 # NotationParser
 
-A tool to convert digital musical notation to pwm rate and duration. You can use this tool to make the buzzer play nice music. [Doc](docs/NotationParser.md)
+A tool to convert digital musical notation to pwm rate and duration. You can use this tool to make the buzzer play nice music. [See docs.](docs/NotationParser.md)
 
-You can also use this tool to convert scores to MIDI file.[Doc](docs/MidiGenerator.md)
+You can also use this tool to convert scores to MIDI file. [See docs.](docs/MidiGenerator.md)
 
 ## Notation
 
