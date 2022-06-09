@@ -20,7 +20,7 @@ A tool to convert digital musical notation to pwm rate and duration. You can use
 
 ## Sample code
 
-![](assets/Snipaste_2022-06-02_10-42-26.jpg)
+![](../assets/Snipaste_2022-06-02_10-42-26.jpg)
 
 ``` python
 parser = NotationParser()

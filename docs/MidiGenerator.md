@@ -19,19 +19,14 @@ A tool to convert digital musical notation to MIDI file.
 
 ## Sample code
 
-![](assets/Snipaste_2022-06-02_10-42-26.jpg)
+![](../assets/Snipaste_2022-06-02_10-42-26.jpg)
 
 ``` python
 generator = MidiGenerator()
 
 generator.createTrack('Piano', 'C', 90, 4)
 
-musicList = [
-    '1', '2', '3', '4', '5', '6', '7'
-]
-
-for monophonic in musicList:
-    generator.addNote('Piano', monophonic)
+generator.addNote('Piano', '+3..')
 
 generator.save('test.mid')
 ```
