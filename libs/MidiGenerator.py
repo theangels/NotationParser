@@ -113,9 +113,6 @@ class MidiGenerator:
         note = self.keySignatureDict[self.tracks[trackName]
                                      ['keySignature']] + self.scaleDict[scaleKey]
 
-        if(monophonic.find('b') != -1):
-            note = note - 1
-
         note = note + 12 * riseNumber
         note = note - 12 * dropNumber
 
