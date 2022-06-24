@@ -10,12 +10,12 @@ A tool to convert digital musical notation to MIDI file.
   - [x] Octave
   - [x] Pause
   - [x] Key Signature
-- [ ] Time control
+- [x] Time control
   - [x] BPM
   - [x] Time Signature
   - [x] Note
   - [x] Mordent
-  - [ ] Tie
+  - [x] Tie
 
 ## Sample code
 

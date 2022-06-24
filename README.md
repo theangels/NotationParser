@@ -61,6 +61,11 @@ For detailed symbols, refer to the following.
 
 * `~`：Upper mordent
 
+### Tie
+
+* `(`: Tie note start
+* `)`: Tie note end
+
 ## Special thanks to `延夏新东方演奏群`
 
 * Clavy

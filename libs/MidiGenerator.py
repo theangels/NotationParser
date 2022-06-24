@@ -64,7 +64,8 @@ class MidiGenerator:
             'track': track,
             'keySignature': keySignature,
             'beatNumber': beatNumber,
-            'lastNote': None
+            'lastNote': None,
+            'lastTimeValue': 0,
         }
 
     def changeBPM(self, name, bpm):
@@ -102,19 +103,19 @@ class MidiGenerator:
 
         riseNumber = monophonic.count('+')
         dropNumber = monophonic.count('-')
-        extendNumber = monophonic.count('.')
-        reduceNumber = monophonic.count('_')
-        dottedNumber = monophonic.count('*')
-        upWaveNumber = monophonic.count('~')
-
-        quarterNoteTime = self.ticksPerBeat * \
-            self.tracks[trackName]['beatNumber'] / 4
 
         note = self.keySignatureDict[self.tracks[trackName]
                                      ['keySignature']] + self.scaleDict[scaleKey]
 
         note = note + 12 * riseNumber
         note = note - 12 * dropNumber
+
+        extendNumber = monophonic.count('.')
+        reduceNumber = monophonic.count('_')
+        dottedNumber = monophonic.count('*')
+
+        quarterNoteTime = self.ticksPerBeat * \
+            self.tracks[trackName]['beatNumber'] / 4
 
         if(extendNumber == 0):
             timeValue = quarterNoteTime * (1 / math.pow(2, reduceNumber))
@@ -124,19 +125,37 @@ class MidiGenerator:
         else:
             timeValue = quarterNoteTime * (extendNumber + 1)
 
+        hasUpWave = False
+        if(monophonic.find('~') != -1):
+            hasUpWave = True
+
+        isTieStart = False
+        if(monophonic.find('(') != -1):
+            isTieStart = True
+
+        isTieEnd = False
+        if(monophonic.find(')') != -1):
+            isTieEnd = True
+
         if(scaleKey == '0'):
             self._pause(self.tracks[trackName]['track'], note, timeValue)
-        elif(upWaveNumber == 0):
-            self._addNote(self.tracks[trackName]['track'], note, timeValue)
-        else:
+        elif(hasUpWave):
             self._addNote(self.tracks[trackName]
                           ['track'], note, timeValue * 3.0 / 8)
             self._addNote(self.tracks[trackName]['track'],
                           self.tracks[trackName]['lastNote'], timeValue * 1.0 / 4)
             self._addNote(self.tracks[trackName]
                           ['track'], note, timeValue * 3.0 / 8)
+        elif(isTieStart):
+            pass
+        elif(isTieEnd):
+            self._addNote(self.tracks[trackName]['track'], note,
+                          timeValue + self.tracks[trackName]['lastTimeValue'])
+        else:
+            self._addNote(self.tracks[trackName]['track'], note, timeValue)
 
         self.tracks[trackName]['lastNote'] = note
+        self.tracks[trackName]['lastTimeValue'] = timeValue
 
     def save(self, path):
         self.mid.save(path)
