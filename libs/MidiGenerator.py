@@ -66,6 +66,7 @@ class MidiGenerator:
             'beatNumber': beatNumber,
             'lastNote': None,
             'lastTimeValue': 0,
+            'isStillTie': False
         }
 
     def changeBPM(self, name, bpm):
@@ -105,7 +106,7 @@ class MidiGenerator:
         dropNumber = monophonic.count('-')
 
         note = self.keySignatureDict[self.tracks[trackName]
-                                     ['keySignature']] + self.scaleDict[scaleKey]
+                                     ['keySignature']] + self.scaleDict[scaleKey] - 1
 
         note = note + 12 * riseNumber
         note = note - 12 * dropNumber
@@ -132,10 +133,19 @@ class MidiGenerator:
         isTieStart = False
         if(monophonic.find('(') != -1):
             isTieStart = True
+        else:
+            self.tracks[trackName]['isStillTie'] = False
 
         isTieEnd = False
         if(monophonic.find(')') != -1):
             isTieEnd = True
+
+        self.tracks[trackName]['lastNote'] = note
+
+        if(self.tracks[trackName]['isStillTie']):
+            self.tracks[trackName]['lastTimeValue'] += timeValue
+        else:
+            self.tracks[trackName]['lastTimeValue'] = timeValue
 
         if(scaleKey == '0'):
             self._pause(self.tracks[trackName]['track'], note, timeValue)
@@ -147,15 +157,13 @@ class MidiGenerator:
             self._addNote(self.tracks[trackName]
                           ['track'], note, timeValue * 3.0 / 8)
         elif(isTieStart):
+            self.tracks[trackName]['isStillTie'] = True
             pass
         elif(isTieEnd):
             self._addNote(self.tracks[trackName]['track'], note,
                           timeValue + self.tracks[trackName]['lastTimeValue'])
         else:
             self._addNote(self.tracks[trackName]['track'], note, timeValue)
-
-        self.tracks[trackName]['lastNote'] = note
-        self.tracks[trackName]['lastTimeValue'] = timeValue
 
     def save(self, path):
         self.mid.save(path)
