@@ -63,7 +63,7 @@ For detailed symbols, refer to the following.
 
 ### Tie
 
-* `(`: Tie note start
+* `(`: Tie note start (Support continuous tie.)
 * `)`: Tie note end
 
 ## Special thanks to `延夏新东方演奏群`
