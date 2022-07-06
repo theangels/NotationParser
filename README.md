@@ -54,7 +54,7 @@ For detailed symbols, refer to the following.
 ### Note
 
 * `_`: Eighth note, sixteenth note, thirty-second note. (depending on the number of `_`)
-* `.`: Half note, whole note. (depending on the number of `_`)
+* `.`: Half note, whole note. (depending on the number of `.`)
 * `*`: Dotted.
 
 ### Mordent
