@@ -140,8 +140,6 @@ class MidiGenerator:
         if(monophonic.find(')') != -1):
             isTieEnd = True
 
-        self.tracks[trackName]['lastNote'] = note
-
         if(self.tracks[trackName]['isStillTie']):
             self.tracks[trackName]['lastTimeValue'] += timeValue
         else:
@@ -164,6 +162,8 @@ class MidiGenerator:
                           timeValue + self.tracks[trackName]['lastTimeValue'])
         else:
             self._addNote(self.tracks[trackName]['track'], note, timeValue)
+
+        self.tracks[trackName]['lastNote'] = note
 
     def save(self, path):
         self.mid.save(path)
