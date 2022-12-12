@@ -82,10 +82,14 @@ class MidiGenerator:
         self.tracks[name]['beatNumber'] = beatNumber
 
     def _addNote(self, track, note, timeValue):
+        playTime = timeValue * 0.8
+        stopTime = timeValue - playTime
+
         track.append(
             mido.Message('note_on', note=int(note), velocity=127, time=0))
         track.append(mido.Message('note_off', note=int(note),
-                                  velocity=127, time=int(timeValue)))
+                                  velocity=127, time=int(playTime)))
+        self._pause(track, note, stopTime)
 
     def _pause(self, track, note, timeValue):
         track.append(
